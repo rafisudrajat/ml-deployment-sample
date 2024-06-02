@@ -29,5 +29,4 @@ async def running_image_classification(file: UploadFile,
     # Convert to PIL Image
     image = Image.open(io.BytesIO(contents))
     inference_result = inference(model, image)
-    print("file type", type(file.file))
     return {"inference result": inference_result}
