@@ -1,14 +1,20 @@
 import torch
-import model
+from model import SimpleCNN
 import Utils
 from PIL import Image
 
 
-def load_model(trained_weight_path: str) -> model.SimpleCNN:
-    model_instance = model.SimpleCNN()
+def load_model(trained_weight_path: str) -> SimpleCNN:
+    model_instance = SimpleCNN()
     model_instance.load_state_dict(torch.load(trained_weight_path))
     return model_instance
 
+
+def inference(model:SimpleCNN, ):
+    DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    model_instance = load_model("artifact/simpleCNN_cat_dog_classifier.pth")
+    model_instance.to(DEVICE)
+    pass
 
 def main():
     DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
