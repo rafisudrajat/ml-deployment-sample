@@ -14,7 +14,6 @@ def load_model(trained_weight_path: str) -> SimpleCNN:
             trained_weight_path,
             map_location=DEVICE))
     model_instance.to(DEVICE)
-    model_instance.eval()
     return model_instance
 
 
