@@ -1,8 +1,20 @@
 import torch
 from torchvision import transforms
+from model import SimpleCNN
 
 # Define the transformation
 DEFAULT_IMG_SIZE = 256
+DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+
+def load_model(trained_weight_path: str) -> SimpleCNN:
+    model_instance = SimpleCNN()
+    model_instance.load_state_dict(
+        torch.load(
+            trained_weight_path,
+            map_location=DEVICE))
+    model_instance.to(DEVICE)
+    return model_instance
 
 
 class MinMaxNormalization(object):

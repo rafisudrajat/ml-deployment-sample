@@ -1,32 +1,44 @@
 import torch
-import model
+from model import SimpleCNN
 import Utils
 from PIL import Image
 
 
-def load_model(trained_weight_path: str) -> model.SimpleCNN:
-    model_instance = model.SimpleCNN()
-    model_instance.load_state_dict(torch.load(trained_weight_path))
-    return model_instance
+DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
-def main():
-    DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model_instance = load_model("artifact/simpleCNN_cat_dog_classifier.pth")
-    model_instance.to(DEVICE)
-    image = Image.open(r'artifact/sample-data/cat1.jpg')
+def inference(model: SimpleCNN, image: Image) -> str:
     # Define image transformation
     transform = Utils.image_transformation()
     image_transformed = transform(image).unsqueeze(0).to(DEVICE)
     # Pass the image through the model
     with torch.no_grad():
-        model_instance.eval()
-        model_output = model_instance(image_transformed)
-
+        model.eval()
+        model_output = model(image_transformed)
     # Interpret the model's output
     _, predicted = torch.max(model_output, 1)
     predicted_class = predicted.item()
-    print("Cat" if predicted_class == 0 else "Dog")
+    return "Cat" if predicted_class == 0 else "Dog"
+
+# Unit test
+
+
+def main():
+    model = Utils.load_model('artifact/simpleCNN_cat_dog_classifier.pth')
+    test_cat1(model)
+    test_dog1(model)
+
+
+def test_dog1(model: SimpleCNN) -> None:
+    image = Image.open(r'artifact/sample-data/dog1.jpeg')
+    result = inference(model, image)
+    assert ("Dog" == result)
+
+
+def test_cat1(model: SimpleCNN) -> None:
+    image = Image.open(r'artifact/sample-data/cat1.jpg')
+    result = inference(model, image)
+    assert ("Cat" == result)
 
 
 if __name__ == "__main__":
