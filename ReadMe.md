@@ -5,7 +5,7 @@
 2. Build docker image
 > docker build -t cat_dog_classifier_app .   
 3. Run docker image
-> docker run -d --name cat_dog_app -p 80:80 cat_dog_classifier_app 
+> docker run --rm -d --name cat_dog_app -p 80:80 cat_dog_classifier_app 
 
 
 # How to use
