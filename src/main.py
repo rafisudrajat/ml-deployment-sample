@@ -1,10 +1,10 @@
-from model import SimpleCNN
+from .model import SimpleCNN
 from fastapi import FastAPI, UploadFile, Depends
-from Utils import load_model
+from .utils import load_model
 from typing_extensions import Annotated
 from PIL import Image
 import io
-from inference import inference
+from .inference import inference
 
 app = FastAPI()
 
