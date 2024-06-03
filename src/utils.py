@@ -1,6 +1,6 @@
 import torch
 from torchvision import transforms
-from model import SimpleCNN
+from .model import SimpleCNN
 
 # Define the transformation
 DEFAULT_IMG_SIZE = 256

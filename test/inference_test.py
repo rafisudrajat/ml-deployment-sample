@@ -1,14 +1,12 @@
-import Utils
 from PIL import Image
-from inference import inference
-from model import SimpleCNN
+from src import inference, utils
 import unittest
 
 
 class TestInferenceMethod(unittest.TestCase):
 
     def setUp(self):
-        self.model = Utils.load_model(
+        self.model = utils.load_model(
             'artifact/simpleCNN_cat_dog_classifier.pth')
 
     # When image input is a cat image, should return "Cat" as image label
