@@ -1,3 +1,5 @@
+This is a very simple API that can be used to classify if an image is a cat or dog (binary classification). It utilizes simple CNN model that trained using cat and dog images.
+
 # How to setup
 
 1.  Clone repository
