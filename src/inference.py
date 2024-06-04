@@ -5,14 +5,11 @@ from PIL import Image
 import torch.backends.cudnn as cudnn
 
 
-DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-
 def inference(model: SimpleCNN, image: Image) -> str:
     # Define image transformation
     cudnn.benchmark = True
     transform = utils.image_transformation()
-    image_transformed = transform(image).unsqueeze(0).to(DEVICE)
+    image_transformed = transform(image).unsqueeze(0).to(utils.DEVICE)
     # Pass the image through the model
     with torch.no_grad():
         model.eval()
